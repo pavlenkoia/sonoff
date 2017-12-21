@@ -1,0 +1,130 @@
+*{
+	box-sizing: border-box;
+}
+body{
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #E9F0F0;
+    margin: 0;
+    display: block;
+}
+.device {
+    background-color: #F5F5F5;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px;
+    }
+}
+@media (min-width: 992px){
+    .container {
+        width: 970px;
+    }
+}
+@media (min-width: 768px){
+    .container {
+        width: 750px;
+    }
+}
+.container:after{
+    clear: both;
+    content: " ";
+    display: table;
+}
+.container:before{
+    content: " ";
+    display: table;
+}
+
+.header {
+    background-color: #fff;
+    box-shadow: 0 22px 22px -22px grey;
+    margin: 0 -15px 23px;
+    padding: 1px 50px 15px;
+    border-radius: 10px 10px 0 0;
+}
+
+h1{
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #333;
+    margin: 0.67em 0;
+    display: block;
+}
+
+.col-md-6{
+    position: relative;
+    min-height: 1px;
+    float: left;
+    width: 100%;
+}
+
+.block {
+    background-color: #fff;
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    margin: 20px 0;
+}
+@media (min-width: 1200px){
+    .block {
+        margin: 20px 15px;
+    }
+}
+h5 {
+    background-color: #4db6ac;
+    color: #fff;
+    margin-top: -40px;
+    padding: 10px 0;
+    width: 50%;
+    text-align: center;
+    text-transform: uppercase;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 7px 12px;
+    line-height: 1.42857143;
+    color: #333;
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+	margin-bottom: 10px;
+    margin-top: 2px;
+    font-size: 16px;
+}
+input[type="button"]{
+	display: block;
+    width: 100%;
+	margin-top: 20px;
+	color: #fff;
+	background-color: #158cba;
+	border-color: #127ba3;
+	padding: 10px 16px;
+	line-height: 1.3333333;
+	border-radius: 5px;
+	cursor: pointer;
+}
+input[type="button"]:hover{
+	background-color: #106a8c;
+	border-color: #0c516c;
+}
+label{
+    display: block;
+    max-width: 100%;
+    margin-bottom: 10px;
+}

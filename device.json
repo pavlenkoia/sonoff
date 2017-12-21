@@ -1,0 +1,33 @@
+{
+  "title":"Увлажнитель",
+  "blocks":[
+    {
+      "title":"Устройство",
+      "controls":[
+        {
+          "type":"input",
+          "name":"device_name",
+          "label":"Название устройства",
+          "value":"Увлажнитель"
+        }
+      ]
+    },
+    {
+      "title":"Точка доступа",
+      "controls":[
+        {
+          "type":"input",
+          "name":"ssid",
+          "label":"Имя точки доступа",
+          "value":"pavia"
+        },
+        {
+          "type":"input",
+          "name":"",
+          "label":"Пароль точки доступа",
+          "value":""
+        }
+      ]
+    }
+  ]
+}

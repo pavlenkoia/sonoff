@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonoff</title>
+</head>
+<body>
+<div id="news"></div>
+<div class="container device index3">
+    <div class="header">
+        <div class="btn-group pull-right" style="margin-top:35px;">
+            <a href="#" class="btn btn-default" onclick="deviceList('first');" title="{{LangRefresh}}"><i class="refresh-img"></i></a>
+            <a href="#" class="btn btn-default dropdown-toggle" onclick="toggle('help');"><i class="help-img"></i> <span class="hidden-xs">{{LangHelp}}</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu hidden" id="help"><li><a href="https://github.com/tretyakovsa/Sonoff_WiFi_switch/issues" target="_blank"><b>Sonoff</b> (Relay)</a></li><li><a href="https://github.com/renat2985/rgb/issues" target="_blank"><b>RGB</b> (WS2811-12/NeoPixel)</a></li><li><a href="https://github.com/tretyakovsa/jaluzi/issues" target="_blank"><b>Jalousie</b> (Motor)</a></li></ul>
+        </div>
+        <div class="pull-right" style="margin-top:35px;margin-right:5px">
+            <div class="btn-group">
+                <a href="/page.htm?scenary" class="btn btn-info dropdown-toggle">{{LangScenary}}</a>
+                <a href="#" class="btn btn-warning dropdown-toggle" onclick="toggle('skins');"><span class="hidden-xs">{{LangDesign}}</span> <span class="caret"></span></a>
+                <ul class="dropdown-menu hidden" id="skins"><li><a href="/skins?set=index.htm"><b>Default</b></a></li><li><a href="/skins?set=index2.htm"><b>Inline</b></a></li><li><a href="/skins?set=index3.htm"><b>Block</b></a></li><li><a href="/skins?set=index4.htm"><b>Life</b></a></li></ul>
+            </div>
+        </div>
+        <h1>Увлажнитель<br><small class="show">работает<sup id="update"></sup></small></h1>
+    </div>
+
+    <div class="col-md-6">
+        <div class="block">
+            <button class="close" onclick="hide('issues-hidden',this);" type="button">×</button>
+            <h5 class="alert-default">Issues</h5>
+            <div id="issues">{{LangLoading}}</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="block">
+            <button class="close" onclick="hide('commits-hidden',this);" type="button">×</button>
+            <h5 class="alert-default">Commits</h5>
+            Сеть
+			<input class="form-control" value="123">
+			<label><input type="checkbox">включить</label>
+
+            <select class="form-control">
+                <option>раз</option>
+                <option>два</option>
+                <option>три</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="block">
+            <h5 class="alert-default">{{LangHistory}}</h5>
+            <ul id="history"></ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="block">
+            <h5 class="alert-danger"><a href="http://{{ip}}">{{SSDP}}</a></h5>
+            <div class="alert alert-dismissible alert-warning {{g69142-{{ip}}}}">
+                <button class="close" onclick="hide('g69142-{{ip}}',this);" type="button">×</button>
+                <a href="http://{{ip}}/page.htm?timer" target="_blank" class="close"><i class="popup-img"></i></a>
+                <ul>{{timerList}}</ul>
+            </div>
+            <hr>
+            <input type="button" onclick="ajax('{{ip}}','relay',this);" value="{{stateRelay}}" class="btn btn-block btn-lg btn-primary">
+            <input type="button" onclick="ajax('{{ip}}','relay1',this);" value="{{stateRelay}}" class="btn btn-block btn-lg btn-primary {{relay1}}">
+            <input type="button" onclick="ajax('{{ip}}','relay2',this);" value="{{stateRelay}}" class="btn btn-block btn-lg btn-primary {{relay2}}">
+            <input type="button" onclick="ajax('{{ip}}','relay3',this);" value="{{stateRelay}}" class="btn btn-block btn-lg btn-primary {{relay3}}">
+            <input type="button" onclick="ajax('{{ip}}','relay4',this);" value="{{stateRelay}}" class="btn btn-block btn-lg btn-primary {{relay4}}">
+            <hr>
+            <div class="btn-group btn-block">
+                <a href="http://{{ip}}/page.htm?relay" class="btn btn-default" style="width:80%"><i class="set-img"></i>{{LangOptions1}}</a>
+                <a href="http://{{ip}}/page.htm?setup" class="btn btn-default" style="width:20%" title="{{LangSetting3}}"><i class="opt-img"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="block">
+            <h5 class="alert-default"><a href="http://{{ip}}">{{SSDP}}</a></h5>
+            <h2>{{LangAnalog}}</h2>
+            <div id="{{analogId}}" style="height:200px;margin-left:-20px"></div>
+            <div class="btn-group btn-block">
+                <a href="http://{{ip}}/page.htm?chart&amp;analog" class="btn btn-default" style="width:80%"><i class="set-img"></i>{{LangOptions1}}</a>
+                <a href="http://{{ip}}/page.htm?setup" class="btn btn-default" style="width:20%" title="{{LangSetting3}}"><i class="opt-img"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="block">
+            <h5 class="alert-default"><a href="http://{{ip}}">{{SSDP}}</a></h5>
+            <h2>{{LangHumidity}}</h2>
+            <div id="{{sensorId}}" style="height:200px;margin-left:-20px"></div>
+            <div class="btn-group btn-block">
+                <a href="http://{{ip}}/page.htm?chart&amp;humidity" class="btn btn-default" style="width:80%"><i class="set-img"></i>{{LangOptions1}}</a>
+                <a href="http://{{ip}}/page.htm?setup" class="btn btn-default" style="width:20%" title="{{LangSetting3}}"><i class="opt-img"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
