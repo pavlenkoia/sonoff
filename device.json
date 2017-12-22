@@ -11,6 +11,31 @@
           "value":"Увлажнитель"
         },
         {
+          "type":"checkbox",
+          "name":"cb",
+          "label":"включить",
+          "value":"1"
+        },
+        {
+          "type":"select",
+          "name":"sel",
+          "label":"Выберите",
+          "options":[
+            {
+              "name":"",
+              "value":""
+            },
+            {
+              "name":"раз",
+              "value":"раз"
+            },
+            {
+              "name":"два",
+              "value":"два"
+            }
+          ]
+        },
+        {
           "type":"submit",
           "value":"Сохранить"
         }
@@ -27,7 +52,7 @@
         },
         {
           "type":"input",
-          "name":"",
+          "name":"password",
           "label":"Пароль точки доступа",
           "value":""
         },

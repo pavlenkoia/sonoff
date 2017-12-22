@@ -108,10 +108,10 @@ h5 {
     font-size: 16px;
 }
 .submit{
-    width:50%!important;
+    width:40%!important;
     margin: auto!important;
 }
-input[type="button"]{
+.button{
 	display: block;
     width: 100%;
 	margin-top: 20px;
@@ -123,12 +123,23 @@ input[type="button"]{
 	border-radius: 5px;
 	cursor: pointer;
 }
-input[type="button"]:hover{
+.button:hover{
 	background-color: #106a8c;
 	border-color: #0c516c;
+}
+input[type="checkbox"]{
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
 }
 label{
     display: block;
     max-width: 100%;
     margin-bottom: 10px;
+}
+hr{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
 }
