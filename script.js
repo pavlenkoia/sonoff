@@ -33,7 +33,9 @@ function viewTemplate(jsonContent, elemId){
                 html += control.label;
                 html += '<input class="form-control" name="'+control.name+'" value="'+control.value+'">';
             }
-
+            else if(control.type == 'submit'){
+                html += '<input type="button" class="submit" value="'+control.value+'">';
+            }
         }
 
         element.innerHTML += html;
