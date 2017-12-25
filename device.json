@@ -1,14 +1,15 @@
 {
-  "title":"Увлажнитель",
+  "title":"{{DEVICE_NAME}}",
   "blocks":[
     {
       "title":"Устройство",
+      "action":"save?mod=device",
       "controls":[
         {
           "type":"input",
-          "name":"device_name",
+          "name":"DEVICE_NAME",
           "label":"Название устройства",
-          "value":"Увлажнитель"
+          "value":"Увл."
         },
         {
           "type":"checkbox",

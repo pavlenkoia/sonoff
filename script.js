@@ -2,7 +2,13 @@ window.onload = function() {
     loadDevice();
 }
 
+var configJson = {};
+
 function loadDevice() {
+    ajax.get('config.json',{},function(response) {
+        configJson = JSON.parse(response);
+    },false);
+
     ajax.get('device.json',{},function(response) {
 
         var jsonDevice = JSON.parse(response);
@@ -30,26 +36,27 @@ function loadDevice() {
 
 function viewTemplate(jsonContent, elemId){
 
+    var value;
+
     var element=document.getElementById(elemId);
 
     var html = '<div class="header"><h1>'+jsonContent.title+'</h1></div>';
-
-    element.innerHTML = html;
 
     for(var i in jsonContent.blocks){
 
         var obj = jsonContent.blocks[i];
 
-        html = '<div class="col-md-6"><div class="block"><h5>'+obj.title+'</h5>';
+        html += '<div class="col-md-6"><div class="block"><h5>'+obj.title+'</h5>';
 
-        html += '<form method="post">';
+        html += '<form method="post" action="'+obj.action+'">';
 
         for(var j in obj.controls){
             var control = obj.controls[j];
 
             if(control.type == 'input'){
+                value = configJson[control.name] == undefined ? control.value : configJson[control.name];
                 html += control.label;
-                html += '<input class="form-control" name="'+control.name+'" value="'+control.value+'">';
+                html += '<input class="form-control" name="'+control.name+'" value="'+value+'">';
             }
             else if(control.type == 'submit'){
                 html += '<input type="submit" class="button submit" value="'+control.value+'">';
@@ -73,8 +80,20 @@ function viewTemplate(jsonContent, elemId){
 
         html += '</form>';
 
-        element.innerHTML += html;
+        html += '</div></div>';
+
     }
+
+    html = replaceTemplate(html, configJson);
+
+    element.innerHTML = html;
+}
+
+function replaceTemplate (str, jsonData){
+    for(var key in jsonData){
+        str = str.replace(new RegExp('{{'+key+'}}', 'g'), jsonData[key]);
+    }
+    return str;
 }
 
 function formSubmit(form) {
@@ -85,8 +104,10 @@ function formSubmit(form) {
 
         if((element.tagName === 'INPUT' || element.tagName === 'SELECT')&& element.name !== ''){
 
-            if(element.type === "checkbox" && element.checked){
-                data[element.name] = element.value;
+            if(element.type === "checkbox"){
+                if(element.checked){
+                    data[element.name] = element.value;
+                }
             }else{
                 data[element.name] = element.value;
             }
@@ -94,5 +115,7 @@ function formSubmit(form) {
         }
 
     }
-    console.log(data);
+    ajax.post(form.action, data,function(response) {
+
+    },true);
 }
