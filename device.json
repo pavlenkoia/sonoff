@@ -3,7 +3,8 @@
   "blocks":[
     {
       "title":"Устройство",
-      "action":"save?mod=device",
+      "action":"save.json",
+      "form_class":"reload",
       "controls":[
         {
           "type":"input",

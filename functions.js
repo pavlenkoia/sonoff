@@ -50,3 +50,21 @@ function submit_disabled(request){
         if (element[i].type === 'button') {element[i].disabled = request;}
     }
 }
+
+function toggle(target,status) {
+    if (document.getElementById(target)){
+        var element = document.getElementById(target).classList;
+        if (element.contains('hide')) {
+            if (status != 'show') {
+                element.remove('hide');
+                element.add('show');
+            }
+        } else {
+            if (status != 'hide') {
+                element.remove('show');
+                element.add('hide');
+            }
+        }
+    }
+    return false;
+}

@@ -1,5 +1,9 @@
 window.onload = function() {
-    loadDevice();
+    //document.getElementById('device').innerHTML  = '<div class="loader-bg"></div>';
+    setTimeout(function () {
+
+    },2000);
+    //loadDevice();
 }
 
 var configJson = {};
@@ -7,30 +11,30 @@ var configJson = {};
 function loadDevice() {
     ajax.get('config.json',{},function(response) {
         configJson = JSON.parse(response);
-    },false);
 
-    ajax.get('device.json',{},function(response) {
+        ajax.get('device.json',{},function(response) {
 
-        var jsonDevice = JSON.parse(response);
+            var jsonDevice = JSON.parse(response);
 
-        viewTemplate(jsonDevice, 'device');
+            viewTemplate(jsonDevice, 'device');
 
-        for(var i in document.forms){
-            var form = document.forms[i];
-            if(form.addEventListener){
-                form.addEventListener('keydown', function(event) {
-                    if(event.keyCode == 13) {
+            for(var i in document.forms){
+                var form = document.forms[i];
+                if(form.addEventListener){
+                    form.addEventListener('keydown', function(event) {
+                        if(event.keyCode == 13) {
+                            event.preventDefault();
+                        }
+                    });
+                    form.addEventListener('submit', function(event) {
+                        formSubmit(this);
+
                         event.preventDefault();
-                    }
-                });
-                form.addEventListener('submit', function(event) {
-                    formSubmit(this);
-
-                    event.preventDefault();
-                });
+                    });
+                }
             }
-        }
 
+        },true);
     },true);
 }
 
@@ -48,7 +52,9 @@ function viewTemplate(jsonContent, elemId){
 
         html += '<div class="col-md-6"><div class="block"><h5>'+obj.title+'</h5>';
 
-        html += '<form method="post" action="'+obj.action+'">';
+        var form_class = obj.form_class != undefined ? obj.form_class : '';
+
+        html += '<form method="post" action="'+obj.action+'" class="'+form_class+'">';
 
         for(var j in obj.controls){
             var control = obj.controls[j];
@@ -60,6 +66,7 @@ function viewTemplate(jsonContent, elemId){
             }
             else if(control.type == 'submit'){
                 html += '<input type="submit" class="button submit" value="'+control.value+'">';
+                html += '<div class="loader hide"></div>';
             }
             else if(control.type == 'checkbox'){
                 html += '<label><input name="'+control.name+'" value="'+control.value+'" type="checkbox"> '+control.label+'</label>';
@@ -115,7 +122,24 @@ function formSubmit(form) {
         }
 
     }
-    ajax.post(form.action, data,function(response) {
+    var loader = form.querySelector('.loader');
+    var submit = form.querySelector('.submit');
+    loader.classList.remove('hide');
+    submit.classList.add('hide');
 
-    },true);
+    setTimeout(function () {
+        ajax.post(form.action, data,function(response) {
+            loader.classList.add('hide');
+            submit.classList.remove('hide');
+            var res = JSON.parse(response);
+            console.log(res);
+            if(res.result == 'error'){
+                alert(res.msg);
+            }else if(res.result == 'reload' || form.classList.contains ('reload')){
+                location.reload();
+            }
+        },true);
+    },1000);
+
+
 }
