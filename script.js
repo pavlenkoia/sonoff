@@ -184,13 +184,23 @@ function formSubmit(form) {
 
 function optAjax(obj) {
     var element=document.getElementById('device');
-
     element.innerHTML = '<div class="loader-bg"></div>';
 
     if(obj.classList.contains('restart')){
-
+        ajax.get(obj.href,{},function(response) {
+            var res = JSON.parse(response);
+            if(res.result == 'success'){
+                var inID = setInterval(function(){
+                    ajax.get('/ping',{},function(response){
+                        if(response == 'pong'){
+                            clearInterval(inID);
+                            location.reload();
+                        }
+                    },true);
+                },1000);
+            }
+        },true);
     }else{
         loadDevice(obj.href);
     }
-
 }
