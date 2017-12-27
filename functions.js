@@ -51,6 +51,12 @@ function submit_disabled(request){
     }
 }
 
+document.onclick = function(e) {
+    if(!e.target.closest('.pull-right')){
+        toggle('opt','show');
+    }
+}
+
 function toggle(target,status) {
     if (document.getElementById(target)){
         var element = document.getElementById(target).classList;
