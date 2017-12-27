@@ -1,5 +1,17 @@
 {
-  "title":"{{DEVICE_NAME}}",
+  "title":"{{deviceName}}",
+  "opt":[
+    {
+      "name":"Настройки",
+      "action":"settings.json",
+      "class":"ajax"
+    },
+    {
+      "name":"Перезагрузить",
+      "action":"restart",
+      "class":"ajax restart"
+    }
+  ],
   "blocks":[
     {
       "title":"Устройство",
@@ -8,7 +20,7 @@
       "controls":[
         {
           "type":"input",
-          "name":"DEVICE_NAME",
+          "name":"deviceName",
           "label":"Название устройства",
           "value":"Увл."
         },

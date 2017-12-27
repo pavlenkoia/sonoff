@@ -132,6 +132,9 @@ input[type="checkbox"]{
     height: 18px;
     vertical-align: middle;
 }
+input[type="file"] {
+    display: block;
+}
 label{
     display: block;
     max-width: 100%;
@@ -283,4 +286,12 @@ i {
 
 .dropdown-menu > li > a:hover {
     color: #000;
+}
+
+h1 small{
+    font-weight: normal;
+    line-height: 1;
+    color: #999;
+    font-size: 65%;
+    margin-top: 7px;
 }

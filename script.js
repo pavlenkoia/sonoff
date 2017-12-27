@@ -1,18 +1,14 @@
 window.onload = function() {
-    //document.getElementById('device').innerHTML  = '<div class="loader-bg"></div>';
-    setTimeout(function () {
-
-    },2000);
-    //loadDevice();
+    loadDevice('device.json');
 }
 
 var configJson = {};
 
-function loadDevice() {
+function loadDevice(device_json) {
     ajax.get('config.json',{},function(response) {
         configJson = JSON.parse(response);
 
-        ajax.get('device.json',{},function(response) {
+        ajax.get(device_json,{},function(response) {
 
             var jsonDevice = JSON.parse(response);
 
@@ -21,17 +17,31 @@ function loadDevice() {
             for(var i in document.forms){
                 var form = document.forms[i];
                 if(form.addEventListener){
-                    form.addEventListener('keydown', function(event) {
-                        if(event.keyCode == 13) {
-                            event.preventDefault();
+                    for (var j in form.elements){
+                        var element = form.elements[j];
+                        if((element.tagName === 'INPUT' || element.tagName === 'SELECT')){
+                            element.addEventListener('keydown', function(event) {
+                                if(event.keyCode == 13) {
+                                    event.preventDefault();
+                                }
+                            });
                         }
-                    });
+                    }
+
                     form.addEventListener('submit', function(event) {
                         formSubmit(this);
-
                         event.preventDefault();
                     });
                 }
+            }
+
+            var elements = document.querySelectorAll('#opt a.ajax');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function(event) {
+                    toggle('opt');
+                    optAjax(this);
+                    event.preventDefault();
+                });
             }
 
         },true);
@@ -41,10 +51,29 @@ function loadDevice() {
 function viewTemplate(jsonContent, elemId){
 
     var value;
+    var html = "";
 
     var element=document.getElementById(elemId);
 
-    var html = '<div class="header"><h1>'+jsonContent.title+'</h1></div>';
+    html += '<div class="header">';
+
+    if(jsonContent.opt != undefined){
+        html += '<div class="btn-group pull-right"><a href="#" class="btn btn-default dropdown-toggle" onclick="toggle(\'opt\');return false;"><i class="opt-img"></i> <span></span> <span class="caret"></span></a><ul class="dropdown-menu hide" id="opt">';
+        for(var i in jsonContent.opt){
+            var opt = jsonContent.opt[i];
+            var opt_class = opt.class != undefined ? opt.class : '';
+            html += '<li><a href="'+opt.action+'" class="'+opt_class+'"><b>'+opt.name+'</b></a></li>';
+        }
+        html += '</ul></div>';
+    }
+
+    html += '<h1>'+jsonContent.title;
+
+    if(jsonContent.subtitle != undefined){
+        html += '<small class="show">'+jsonContent.subtitle+'</small>';
+    }
+
+    html += '</h1></div>';
 
     for(var i in jsonContent.blocks){
 
@@ -52,9 +81,9 @@ function viewTemplate(jsonContent, elemId){
 
         html += '<div class="col-md-6"><div class="block"><h5>'+obj.title+'</h5>';
 
-        var form_class = obj.form_class != undefined ? obj.form_class : '';
-
-        html += '<form method="post" action="'+obj.action+'" class="'+form_class+'">';
+        var form_class = obj.form_class != undefined ? 'class="'+obj.form_class+'"'  : '';
+        var form_file = obj.form_file === true ? 'enctype="multipart/form-data"' : '';
+        html += '<form method="post" action="'+obj.action+'" '+form_class+' '+form_file+'>';
 
         for(var j in obj.controls){
             var control = obj.controls[j];
@@ -63,6 +92,11 @@ function viewTemplate(jsonContent, elemId){
                 value = configJson[control.name] == undefined ? control.value : configJson[control.name];
                 html += control.label;
                 html += '<input class="form-control" name="'+control.name+'" value="'+value+'">';
+            }
+            if(control.type == 'text'){
+                value = configJson[control.name] == undefined ? control.value : configJson[control.name];
+                html += control.label;
+                html += '<textarea class="form-control" name="'+control.name+'">'+value+'</textarea>';
             }
             else if(control.type == 'submit'){
                 html += '<input type="submit" class="button submit" value="'+control.value+'">';
@@ -79,6 +113,11 @@ function viewTemplate(jsonContent, elemId){
                     html += '<option value="'+option.value+'">'+option.name+'</option>';
                 }
                 html += '</select>';
+            }
+            else if(control.type == 'file'){
+                value = configJson[control.name] == undefined ? control.value : configJson[control.name];
+                html += control.label;
+                html += '<input class="form-control" name="'+control.name+'" type="file">';
             }
             else if(control.type == 'hr'){
                 html += '<hr>';
@@ -141,5 +180,17 @@ function formSubmit(form) {
         },true);
     },1000);
 
+}
+
+function optAjax(obj) {
+    var element=document.getElementById('device');
+
+    element.innerHTML = '<div class="loader-bg"></div>';
+
+    if(obj.classList.contains('restart')){
+
+    }else{
+        loadDevice(obj.href);
+    }
 
 }

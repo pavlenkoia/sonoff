@@ -1,0 +1,46 @@
+{
+  "title":"{{deviceName}}",
+  "subtitle":"Настройки",
+  "opt":[
+    {
+      "name":"{{deviceName}}",
+      "action":"device.json",
+      "class":"ajax"
+    },
+    {
+      "name":"Перезагрузить",
+      "action":"restart",
+      "class":"ajax restart"
+    }
+  ],
+  "blocks":[
+    {
+      "title":"Точка доступа",
+      "form_file":true,
+      "controls":[
+        {
+          "type":"input",
+          "name":"ssid",
+          "label":"Имя точки доступа",
+          "value":"pavia"
+        },
+        {
+          "type":"text",
+          "name":"password",
+          "label":"Пароль точки доступа",
+          "value":""
+        },
+        {
+          "type":"file",
+          "name":"update_file",
+          "label":"Файл прошивки",
+          "value":""
+        },
+        {
+          "type":"submit",
+          "value":"Сохранить"
+        }
+      ]
+    }
+  ]
+}
