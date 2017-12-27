@@ -28,10 +28,13 @@ function loadDevice(device_json) {
                         }
                     }
 
-                    form.addEventListener('submit', function(event) {
-                        formSubmit(this);
-                        event.preventDefault();
-                    });
+                    if(!form.classList.contains('noajax')){
+                        form.addEventListener('submit', function(event) {
+                            formSubmit(this);
+                            event.preventDefault();
+                        });
+                    }
+
                 }
             }
 
