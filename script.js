@@ -246,7 +246,7 @@ function optAjax(obj) {
                             location.reload();
                         }
                     },true);
-                },1000);
+                },3000);
             }
         },true);
     }else{
