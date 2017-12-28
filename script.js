@@ -8,6 +8,10 @@ function loadDevice(device_json) {
     ajax.get('config.json',{},function(response) {
         configJson = JSON.parse(response);
 
+        if(configJson.deviceName != undefined){
+            document.title = configJson.deviceName;
+        }
+
         ajax.get(device_json,{},function(response) {
 
             var jsonDevice = JSON.parse(response);
@@ -125,6 +129,10 @@ function viewTemplate(jsonContent, elemId){
             else if(control.type == 'hr'){
                 html += '<hr>';
             }
+            else if(control.type == 'template'){
+                var delay = control.delay == undefined ? 1 : control.delay;
+                html += '<div class="template" data-template="'+control.template+'" data-update="'+control.update+'" data-delay="'+delay+'" data-tmpl=""></div>';
+            }
         }
 
         html += '</form>';
@@ -136,6 +144,8 @@ function viewTemplate(jsonContent, elemId){
     html = replaceTemplate(html, configJson);
 
     element.innerHTML = html;
+
+    setControlTemplates(element);
 }
 
 function replaceTemplate (str, jsonData){
@@ -143,6 +153,21 @@ function replaceTemplate (str, jsonData){
         str = str.replace(new RegExp('{{'+key+'}}', 'g'), jsonData[key]);
     }
     return str;
+}
+
+function setControlTemplates(root) {
+    var els = root.querySelectorAll('.template');
+    for(var i in els){
+        var el = els[i];
+        if (typeof el.dataset !== 'undefined'){
+            ajax.get(el.dataset.template,{},function(response) {
+                if (typeof el.dataset !== 'undefined'){
+                    el.dataset.tmpl = response;
+                    el.innerHTML = response;
+                }
+            },false);
+        }
+    }
 }
 
 function formSubmit(form) {

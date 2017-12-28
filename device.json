@@ -14,65 +14,14 @@
   ],
   "blocks":[
     {
-      "title":"Устройство",
-      "action":"save.json",
-      "form_class":"reload",
-      "controls":[
+      "title": "Состояние системы",
+      "action": "",
+      "controls": [
         {
-          "type":"input",
-          "name":"deviceName",
-          "label":"Название устройства",
-          "value":"Увл."
-        },
-        {
-          "type":"checkbox",
-          "name":"cb",
-          "label":"включить",
-          "value":"1"
-        },
-        {
-          "type":"select",
-          "name":"sel",
-          "label":"Выберите",
-          "options":[
-            {
-              "name":"",
-              "value":""
-            },
-            {
-              "name":"раз",
-              "value":"раз"
-            },
-            {
-              "name":"два",
-              "value":"два"
-            }
-          ]
-        },
-        {
-          "type":"submit",
-          "value":"Сохранить"
-        }
-      ]
-    },
-    {
-      "title":"Точка доступа",
-      "controls":[
-        {
-          "type":"input",
-          "name":"ssid",
-          "label":"Имя точки доступа",
-          "value":"pavia"
-        },
-        {
-          "type":"input",
-          "name":"password",
-          "label":"Пароль точки доступа",
-          "value":""
-        },
-        {
-          "type":"submit",
-          "value":"Сохранить"
+          "type": "template",
+          "template": "template.txt",
+          "update": "",
+          "delay":1
         }
       ]
     }
