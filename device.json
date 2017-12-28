@@ -20,8 +20,8 @@
         {
           "type": "template",
           "template": "template.txt",
-          "update": "",
-          "delay":1
+          "update": "update.json",
+          "delay":3000
         }
       ]
     }

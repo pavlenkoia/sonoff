@@ -3,6 +3,7 @@ window.onload = function() {
 }
 
 var configJson = {};
+var intIDs = [];
 
 function loadDevice(device_json) {
     ajax.get('config.json',{},function(response) {
@@ -130,8 +131,8 @@ function viewTemplate(jsonContent, elemId){
                 html += '<hr>';
             }
             else if(control.type == 'template'){
-                var delay = control.delay == undefined ? 1 : control.delay;
-                html += '<div class="template" data-template="'+control.template+'" data-update="'+control.update+'" data-delay="'+delay+'" data-tmpl=""></div>';
+                var delay = control.delay == undefined ? 1000 : control.delay;
+                html += '<div class="template" data-template="'+control.template+'" data-update="'+control.update+'" data-delay="'+delay+'" data-tmpl=""><div class="loader"></div></div>';
             }
         }
 
@@ -142,6 +143,11 @@ function viewTemplate(jsonContent, elemId){
     }
 
     html = replaceTemplate(html, configJson);
+
+    for (var i = 0; i < intIDs.length; i++){
+        clearInterval(intIDs[i]);
+    }
+    intIDs = [];
 
     element.innerHTML = html;
 
@@ -158,15 +164,32 @@ function replaceTemplate (str, jsonData){
 function setControlTemplates(root) {
     var els = root.querySelectorAll('.template');
     for(var i in els){
-        var el = els[i];
-        if (typeof el.dataset !== 'undefined'){
-            ajax.get(el.dataset.template,{},function(response) {
-                if (typeof el.dataset !== 'undefined'){
-                    el.dataset.tmpl = response;
-                    el.innerHTML = response;
+        loadTmpl(els[i]);
+    }
+}
+
+function loadTmpl(el) {
+    if (typeof el.dataset !== 'undefined'){
+        ajax.get(el.dataset.template,{},function(response) {
+            if (typeof el.dataset !== 'undefined'){
+                el.dataset.tmpl = response;
+                if(el.dataset.update != undefined && el.dataset.update != ""){
+                    loadTmplUpdate(el);
+                    var intID = setInterval(function () {
+                        loadTmplUpdate(el);
+                    },el.dataset.delay);
+                    intIDs.push(intID);
                 }
-            },false);
-        }
+            }
+        });
+    }
+}
+function loadTmplUpdate(el){
+    if (typeof el.dataset !== 'undefined'){
+        ajax.get(el.dataset.update,{},function(response) {
+            var updateJson = JSON.parse(response);
+            el.innerHTML = replaceTemplate (el.dataset.tmpl, updateJson);
+        });
     }
 }
 
@@ -218,10 +241,10 @@ function optAjax(obj) {
         ajax.get(obj.href,{},function(response) {
             var res = JSON.parse(response);
             if(res.result == 'success'){
-                var inID = setInterval(function(){
+                var intID = setInterval(function(){
                     ajax.get('/ping',{},function(response){
                         if(response == 'pong'){
-                            clearInterval(inID);
+                            clearInterval(intID);
                             location.reload();
                         }
                     },true);
