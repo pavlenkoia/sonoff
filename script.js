@@ -144,10 +144,7 @@ function viewTemplate(jsonContent, elemId){
 
     html = replaceTemplate(html, configJson);
 
-    for (var i = 0; i < intIDs.length; i++){
-        clearInterval(intIDs[i]);
-    }
-    intIDs = [];
+    clearIntervals();
 
     element.innerHTML = html;
 
@@ -234,6 +231,7 @@ function formSubmit(form) {
 }
 
 function optAjax(obj) {
+    clearIntervals();
     var element=document.getElementById('device');
     element.innerHTML = '<div class="loader-bg"></div>';
 
@@ -254,4 +252,11 @@ function optAjax(obj) {
     }else{
         loadDevice(obj.href);
     }
+}
+
+function clearIntervals() {
+    for (var i = 0; i < intIDs.length; i++){
+        clearInterval(intIDs[i]);
+    }
+    intIDs = [];
 }
