@@ -74,3 +74,22 @@ function toggle(target,status) {
     }
     return false;
 }
+
+function uptimeToStr(uptime) {
+    var tm, uptimestr = '';
+    if (uptime >= 86400)
+        uptimestr = parseInt(uptime / 86400) + ' дн ';
+    tm = parseInt(uptime % 86400 / 3600);
+    if (tm < 10)
+        uptimestr += '0';
+    uptimestr += tm + ':';
+    tm = parseInt(uptime % 3600 / 60);
+    if (tm < 10)
+        uptimestr += '0';
+    uptimestr += tm + ':';
+    tm = parseInt(uptime % 60);
+    if (tm < 10)
+        uptimestr += '0';
+    uptimestr += tm;
+    return uptimestr;
+}
