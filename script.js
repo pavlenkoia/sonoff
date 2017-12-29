@@ -87,7 +87,7 @@ function viewTemplate(jsonContent, elemId){
 
         var obj = jsonContent.blocks[i];
 
-        html += '<div class="col-md-6"><div class="block"><h5>'+obj.title+'</h5>';
+        html += '<div class="col-md-6"><div class="block"><h5 class="'+obj.titleClass+'">'+obj.title+'</h5>';
 
         var form_class = obj.form_class != undefined ? 'class="'+obj.form_class+'"'  : '';
         var form_file = obj.form_file === true ? 'enctype="multipart/form-data"' : '';
@@ -112,6 +112,10 @@ function viewTemplate(jsonContent, elemId){
             }
             else if(control.type == 'checkbox'){
                 html += '<label><input name="'+control.name+'" value="'+control.value+'" type="checkbox"> '+control.label+'</label>';
+            }
+            else if(control.type == 'extracheckbox'){
+                html += '<input type="checkbox" class="checkbox" id="ecb-'+control.name+'" name="'+control.name+'" value="'+control.value+'" />';
+                html += '<label for="ecb-'+control.name+'" class="ios-switch">'+control.label+'</label>';
             }
             else if(control.type == 'select'){
                 html += control.label;

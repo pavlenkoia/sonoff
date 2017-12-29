@@ -15,6 +15,7 @@
   "blocks":[
     {
       "title": "Состояние системы",
+      "titleClass":"alert-info",
       "action": "",
       "controls": [
         {

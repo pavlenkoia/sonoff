@@ -139,6 +139,7 @@ label{
     display: block;
     max-width: 100%;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 hr{
     margin-top: 20px;
@@ -294,4 +295,67 @@ h1 small{
     color: #999;
     font-size: 65%;
     margin-top: 7px;
+}
+
+.checkbox {
+    vertical-align: top;
+    margin: 0 3px 0 0;
+    width: 17px;
+    height: 17px;
+}
+.checkbox:not(checked) { position: absolute; opacity: 0;}
+.checkbox:not(checked) + label.ios-switch {
+    position: relative;
+    padding: 0 0 0 60px;
+    display: block;
+    height: 30px;
+    width: 20px;
+}
+.checkbox:not(checked) + label.ios-switch:before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 50px;
+    height: 26px;
+    border-radius: 13px;
+    border-color: #CDD1DA;
+    box-shadow: #CDD1DA 0px 0px 0px 0px inset;
+    transition: border 0.4s, box-shadow 0.4s;
+    background-color: #EBECEC;
+}
+.checkbox:not(checked) + label.ios-switch:after {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+    transition: all .2s;
+}
+.checkbox:checked + label.ios-switch:before {
+    box-shadow: #4AD963 0px 0px 0px 16px inset;
+    transition: border 0.4s, box-shadow 0.4s, background-color 1.2s;
+    background-color: #4AD963;
+    border-color: #4AD963;
+}
+.checkbox:checked + label.ios-switch:after { left: 26px;}
+
+.alert-danger{
+    background-color: #ff4136;
+    border-color: #ff1103;
+    color: #fff;
+}
+.alert-info {
+    background-color: #75caeb;
+    border-color: #40b5e3;
+    color: #fff;
+}
+.alert-warning {
+    background-color: #ff851b;
+    border-color: #ff7701;
+    color: #fff;
 }

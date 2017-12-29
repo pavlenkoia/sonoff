@@ -37,6 +37,12 @@
           "value":""
         },
         {
+          "type":"extracheckbox",
+          "name":"ecb",
+          "label":"Включить",
+          "value":"1"
+        },
+        {
           "type":"submit",
           "value":"Сохранить"
         }
