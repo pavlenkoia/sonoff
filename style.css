@@ -1,5 +1,5 @@
 *{
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 body{
     font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -103,7 +103,7 @@ h5 {
     color: #333;
     border: 1px solid #e7e7e7;
     border-radius: 4px;
-	margin-bottom: 10px;
+    margin-bottom: 10px;
     margin-top: 2px;
     font-size: 16px;
 }
@@ -112,20 +112,20 @@ h5 {
     margin: auto!important;
 }
 .button{
-	display: block;
+    display: block;
     width: 100%;
-	margin-top: 20px;
-	color: #fff;
-	background-color: #158cba;
-	border-color: #127ba3;
-	padding: 10px 16px;
-	line-height: 1.3333333;
-	border-radius: 5px;
-	cursor: pointer;
+    margin-top: 20px;
+    color: #fff;
+    background-color: #158cba;
+    border-color: #127ba3;
+    padding: 10px 16px;
+    line-height: 1.3333333;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .button:hover{
-	background-color: #106a8c;
-	border-color: #0c516c;
+    background-color: #106a8c;
+    border-color: #0c516c;
 }
 input[type="checkbox"]{
     width: 18px;
@@ -309,7 +309,6 @@ h1 small{
     padding: 0 0 0 60px;
     display: block;
     height: 30px;
-    width: 20px;
 }
 .checkbox:not(checked) + label.ios-switch:before {
     content: '';

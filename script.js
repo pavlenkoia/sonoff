@@ -114,7 +114,8 @@ function viewTemplate(jsonContent, elemId){
                 html += '<label><input name="'+control.name+'" value="'+control.value+'" type="checkbox"> '+control.label+'</label>';
             }
             else if(control.type == 'extracheckbox'){
-                html += '<input type="checkbox" class="checkbox" id="ecb-'+control.name+'" name="'+control.name+'" value="'+control.value+'" />';
+                var checked = configJson[control.name] == control.value ? 'checked="checked"' : '';
+                html += '<input type="checkbox" class="checkbox" id="ecb-'+control.name+'" name="'+control.name+'" value="'+control.value+'" '+checked+' />';
                 html += '<label for="ecb-'+control.name+'" class="ios-switch">'+control.label+'</label>';
             }
             else if(control.type == 'select'){
@@ -136,7 +137,8 @@ function viewTemplate(jsonContent, elemId){
             }
             else if(control.type == 'template'){
                 var delay = control.delay == undefined ? 1000 : control.delay;
-                html += '<div class="template" data-template="'+control.template+'" data-update="'+control.update+'" data-delay="'+delay+'" data-tmpl=""><div class="loader"></div></div>';
+                var updateType = control.updateType == 'relay' ? 'data-updatetype="relay"' : '';
+                html += '<div class="template" data-template="'+control.template+'" data-update="'+control.update+'" '+updateType+' data-delay="'+delay+'" data-tmpl=""><div class="loader"></div></div>';
             }
         }
 
@@ -174,12 +176,17 @@ function loadTmpl(el) {
         ajax.get(el.dataset.template,{},function(response) {
             if (typeof el.dataset !== 'undefined'){
                 el.dataset.tmpl = response;
-                if(el.dataset.update != undefined && el.dataset.update != ""){
+                if(el.dataset.updatetype == 'relay'){
+                    el.innerHTML = response;
+                }
+                if(el.dataset.update != undefined && el.dataset.update != "" && el.dataset.update != 'undefined'){
                     loadTmplUpdate(el);
                     var intID = setInterval(function () {
                         loadTmplUpdate(el);
                     },el.dataset.delay);
                     intIDs.push(intID);
+                }else{
+                    el.innerHTML = response;
                 }
             }
         });
@@ -189,7 +196,12 @@ function loadTmplUpdate(el){
     if (typeof el.dataset !== 'undefined'){
         ajax.get(el.dataset.update,{},function(response) {
             var updateJson = JSON.parse(response);
-            el.innerHTML = replaceTemplate (el.dataset.tmpl, updateJson);
+            if(el.dataset.updatetype == 'relay'){
+                var el_r = el.querySelector('.checkbox');
+                updateRelay(el_r,updateJson);
+            }else{
+                el.innerHTML = replaceTemplate (el.dataset.tmpl, updateJson);
+            }
         });
     }
 }
@@ -205,6 +217,9 @@ function formSubmit(form) {
             if(element.type === "checkbox"){
                 if(element.checked){
                     data[element.name] = element.value;
+                }
+                else{
+                    data[element.name] = 0;
                 }
             }else{
                 data[element.name] = element.value;
